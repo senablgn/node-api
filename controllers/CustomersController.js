@@ -7,7 +7,7 @@ const customerService=require("../service/CustomerService")
 
 function createCustomer(createRequest,createCustomerResponseResponse) {
     const {id,nationalId,firstName,lastName,password,email}=createRequest.body;
-
+    console.log("x")
     const createdCustomer=new Customer(id,nationalId,firstName,lastName,password,email);
 
     console.log(customerService);
@@ -19,6 +19,7 @@ function createCustomer(createRequest,createCustomerResponseResponse) {
 
 function getCustomerById(request, response) {
     const { id } = request.params;
+    console.log("x")
 
     customerService.getCustomerById(id)
         .then(customer => {
@@ -70,5 +71,10 @@ function deleteCustomer(request,response) {
     });
 
 }
+1
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer}
+function getAllCustomers() {
+    return customerService.getAllCustomers();
+}
+
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}

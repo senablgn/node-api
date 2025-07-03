@@ -51,4 +51,12 @@ async function deleteCustomer(id) {
     return result.rows[0];
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer}
+
+async function getAllCustomers() {
+    const query = 'SELECT * FROM customers;';
+    const result = await db.query(query);
+    return result.rows;
+}
+
+
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}

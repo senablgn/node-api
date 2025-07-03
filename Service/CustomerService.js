@@ -31,4 +31,8 @@ const repository=require("../repository/CustomerRepository");
  return repository.deleteCustomer(id);
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer}
+function getAllCustomers() {
+    return repository.getAllCustomers();
+}
+
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}
