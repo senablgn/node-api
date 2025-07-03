@@ -5,7 +5,7 @@ const app = express();
 const customersController = require("./controllers/CustomersController");
 
 
-app.use(express.json());
+app.use(express.json());    
 
 app.post('/customer', customersController.createCustomer);
 app.get('/customer/:id', customersController.getCustomerById);

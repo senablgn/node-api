@@ -6,9 +6,6 @@ const Customer = require("../entities/Customer");
 const customerService=require("../service/CustomerService")
 
 function createCustomer(createRequest,createCustomerResponseResponse) {
-
-    console.log("x")
-    
     const {id,nationalId,firstName,lastName,password,email}=createRequest.body;
 
     const createdCustomer=new Customer(id,nationalId,firstName,lastName,password,email);

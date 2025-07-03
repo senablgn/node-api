@@ -1,45 +1,34 @@
 'use strict';
 
 const db=require("../repository/CustomerRepository");
+const repository=require("../repository/CustomerRepository");
 
 
-async function createCustomer({id,nationalId,firstName,lastName,password,email}) {
-const query = 'INSERT INTO customers (id, national_id, first_name, last_name, password, email) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
-;
-    const values = [id,nationalId,firstName,lastName,password,email];
-    const result = await db.query(query, values);
-    return result.rows[0];
+
+
+ async function createCustomer({id,nationalId,firstName,lastName,password,email}) {
+  return await  repository.createCustomer(id,nationalId,firstName,lastName,password,email);
 }
 
 
 
 
-async function getCustomerById(id) {
-    const query = 'SELECT * FROM customers WHERE id = $1';
-    const values = [id];
-
-    const result = await db.query(query, values);
-    return result.rows[0]; 
+ async function getCustomerById(id) {
+   return await repository.getCustomerById(id);
 }
 
 
 
 
-async function updateCustomer(id,change) {
-    let query='UPDATE customers SET password = $1 WHERE id = $2 RETURNING *;';
-    let values=[change,id];
-    const result=await db.query(query,values);
-    return result.rows[0];
+ function updateCustomer(id,change) {
 
+   return repository.updateCustomer(id,change);
 
 }
 
 
-async function deleteCustomer(id) {
-    let query='delete from customers where id=$1 RETURNING *;';
-    let value=[id];
-    const result=await db.query(query,value);
-    return result.rows[0];
+ function deleteCustomer(id) {
+ return repository.deleteCustomer(id);
 }
 
 module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer}
