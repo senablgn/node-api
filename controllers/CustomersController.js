@@ -17,7 +17,7 @@ function createCustomer(createRequest,createCustomerResponseResponse) {
     customerService.createCustomer(createdCustomer);
     createCustomerResponseResponse.json({"message":"Customer created"});
 }
-module.exports={createCustomer}
+
 
 
 function getCustomerById(request, response) {
@@ -37,4 +37,41 @@ function getCustomerById(request, response) {
         });
 }
 
-module.exports = { createCustomer, getCustomerById }
+
+
+function updateCustomer(request,response) {
+    const {password}=request.body;
+    const {id}=request.params;
+    customerService.updateCustomer(id,password).then(customer => {
+            if (customer) {
+                response.json(customer);
+            } else {
+                response.status(404).json({ message: "Customer not found" });
+            }
+        })
+           .catch(err => {
+            console.error(err);
+            response.status(500).json({ message: "Internal server error" });
+        });
+    
+
+}
+
+
+function deleteCustomer(request,response) {
+    const {id}=request.params;
+    customerService.deleteCustomer(id).then(customer=>{
+        if(customer){
+            response.json('customer deleted',customer);
+        }else{
+            response.status(404).json({message:"Customer not found"})
+        }
+    })
+    .catch(error=>{
+        console.error(error);
+        response.status(500).json({message:"Server Error"});
+    });
+
+}
+
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer}
