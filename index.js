@@ -1,10 +1,14 @@
-const express = require('express');
+'use strict';
+
+const express = require("express");
 const app = express();
-const userRoutes = require('./router/router');
+const customersController = require("./controllers/CustomersController");
 
 app.use(express.json());
-app.use(userRoutes);
+
+app.post('/customer', customersController.createCustomer);
+app.get('/customer/:id', customersController.getCustomerById);
 
 app.listen(3000, () => {
-    console.log('çalıştı');
+    console.log("Server is running ");
 });
