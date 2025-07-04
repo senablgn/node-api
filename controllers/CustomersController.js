@@ -10,7 +10,7 @@ function createCustomer(createRequest,createCustomerResponseResponse) {
     
     const createdCustomer=new Customer(id,nationalId,firstName,lastName,password,email);
 
-    console.log(customerService);
+  
     customerService.createCustomer(createdCustomer);
     createCustomerResponseResponse.json({"message":"Customer created"});
 }
@@ -19,7 +19,7 @@ function createCustomer(createRequest,createCustomerResponseResponse) {
 
 function getCustomerById(request, response) {
     const { id } = request.params;
-    console.log("x")
+ 
 
     customerService.getCustomerById(id)
         .then(customer => {
@@ -34,6 +34,22 @@ function getCustomerById(request, response) {
             response.status(500).json({ message: "Internal server error" });
         });
 }
+
+function getCustomerByName(request,response) {
+    const firstName=request.query.firstName;
+
+    customerService.getCustomerByName(firstName).then(customer=>{
+        if(customer){
+            response.json({"customers listed ":customer})
+        }else{
+            response.status(404).json({message:"customer not found"});
+        }
+    }).catch(error=>{
+        console.log(error);
+        response.status(500).json({message:"Internal server error"})
+    });
+}
+
 
 
 
@@ -89,4 +105,4 @@ function getAllCustomers(request,response) {
     });
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers,getCustomerByName}

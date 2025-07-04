@@ -8,10 +8,12 @@ const customersController = require("./controllers/CustomersController");
 app.use(express.json());    
 
 app.post('/customer', customersController.createCustomer); 
-app.get('/customer/:id', customersController.getCustomerById);
-app.put('/customer/update/:id',customersController.updateCustomer); 
-app.delete('/customer/delete/:id',customersController.deleteCustomer);
-app.get('/customers',customersController.getAllCustomers)
+app.get('/customer/name', customersController.getCustomerByName); 
+app.get('/customer/:id', customersController.getCustomerById);    
+app.put('/customer/update/:id', customersController.updateCustomer); 
+app.delete('/customer/delete/:id', customersController.deleteCustomer);
+app.get('/customers', customersController.getAllCustomers);
+
 
 app.listen(3000, () => {
     console.log("Server is running ");
