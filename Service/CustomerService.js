@@ -17,6 +17,9 @@ const repository=require("../repository/CustomerRepository");
    return await repository.getCustomerById(id);
 }
 
+async function getCustomerByName(firstName) {
+   return await repository.getCustomerByName(firstName);
+}
 
 
 
@@ -35,4 +38,4 @@ function getAllCustomers() {
     return repository.getAllCustomers();
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers,getCustomerByName}

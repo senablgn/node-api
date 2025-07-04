@@ -28,9 +28,17 @@ async function getCustomerById(id) {
     const values = [id];
 
     const result = await db.query(query, values);
-    return result.rows; 
+    return result.rows[0]; 
 }
 
+
+async function getCustomerByName(firstName) {
+    const query = 'SELECT * FROM customers WHERE first_name = $1 ;';
+    const values = [firstName];  ////////
+
+    const result = await db.query(query, values);
+    return result.rows; 
+}
 
 
 
@@ -61,4 +69,4 @@ async function getAllCustomers() {
 }
 
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers,getCustomerByName}
