@@ -7,7 +7,7 @@ const customerService=require("../service/CustomerService")
 
 function createCustomer(createRequest,createCustomerResponseResponse) {
     const {id,nationalId,firstName,lastName,password,email}=createRequest.body;
-    console.log("x")
+    
     const createdCustomer=new Customer(id,nationalId,firstName,lastName,password,email);
 
     console.log(customerService);
@@ -38,22 +38,23 @@ function getCustomerById(request, response) {
 
 
 function updateCustomer(request,response) {
-    const {password}=request.body;
+    const {field,value}=request.body;
+    
     const {id}=request.params;
-    customerService.updateCustomer(id,password).then(customer => {
+    customerService.updateCustomer(id,field,value).then(customer => {
             if (customer) {
                 response.json(customer);
             } else {
                 response.status(404).json({ message: "Customer not found" });
             }
         })
-           .catch(err => {
+        .catch(err => {
             console.error(err);
             response.status(500).json({ message: "Internal server error" });
         });
+}
     
 
-}
 
 
 function deleteCustomer(request,response) {
@@ -73,8 +74,19 @@ function deleteCustomer(request,response) {
 }
 1
 
-function getAllCustomers() {
-    return customerService.getAllCustomers();
+function getAllCustomers(request,response) {
+    return  customerService.getAllCustomers().then(customer=>{
+        if(customer){
+            response.json({"customers listed ":customer});
+        }
+        else{
+            response.status(404).json({"error":"Empty List"})
+        }
+        
+    }).catch(error=>{
+        console.error(error);
+        response.status(500).json({message:"Server Error"});
+    });
 }
 
 module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers}

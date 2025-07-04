@@ -7,7 +7,7 @@ const repository=require("../repository/CustomerRepository");
 
 
  async function createCustomer({id,nationalId,firstName,lastName,password,email}) {
-  return await  repository.createCustomer(id,nationalId,firstName,lastName,password,email);
+  return await  repository.createCustomer({id,nationalId,firstName,lastName,password,email});
 }
 
 
@@ -20,9 +20,9 @@ const repository=require("../repository/CustomerRepository");
 
 
 
- function updateCustomer(id,change) {
+ function updateCustomer(id,field,value) {
 
-   return repository.updateCustomer(id,change);
+   return repository.updateCustomer(id,field ,value);
 
 }
 

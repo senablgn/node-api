@@ -24,19 +24,21 @@ const query = 'INSERT INTO customers (id, national_id, first_name, last_name, pa
 
 
 async function getCustomerById(id) {
-    const query = 'SELECT * FROM customers WHERE id = $1';
+    const query = 'SELECT * FROM customers WHERE id = $1 ;';
     const values = [id];
 
     const result = await db.query(query, values);
-    return result.rows[0]; 
+    return result.rows; 
 }
 
 
 
 
-async function updateCustomer(id,change) {
-    let query='UPDATE customers SET password = $1 WHERE id = $2 RETURNING *;';
-    let values=[change,id];
+async function updateCustomer(id,field,value) {
+  let query = `UPDATE customers SET ${field} = $1 WHERE id = $2 RETURNING *;`;
+
+    
+    let values=[value,id];
     const result=await db.query(query,values);
     return result.rows[0];
 
