@@ -7,21 +7,23 @@ const User = require("../entities/Customer");
 const customerService=require("../service/CustomerService")
 
 async function createCustomer(req, res) {
-    const { nationalId,firstName,lastName,email,phoneNumber } = req.body;
-
+    const { nationalId, firstName, lastName, email, phoneNumber } = req.body;
 
     const createdCustomer = { nationalId, firstName, lastName, phoneNumber, email };
 
     try {
-        await customerService.createCustomer(createdCustomer);
-
-        res.status(201).json({ message: "Customer created successfully" });
+        const newUser = await customerService.createCustomer(createdCustomer); // ID'yi al
+        
+        res.status(201).json({ 
+            message: "Customer created successfully",
+            userId: newUser.id,  // ID'yi döndür
+            user: newUser        // İsteğe bağlı: tüm kullanıcı bilgisi
+        });
 
     } catch (error) {
         console.error("Hata:", error); 
 
         if (error.code === '23505') {
-            
             return res.status(409).json({ error: `National id (${nationalId}) is already exist.` });
         }
         
@@ -29,7 +31,22 @@ async function createCustomer(req, res) {
     }
 }
 
+async function addCourseToUser(req, res) {
+  const userId = req.params.id;
+  const { course } = req.body;
 
+  if (!course) {
+    return res.status(400).json({ error: "Course name is required." });
+  }
+
+  try {
+    await customerService.addCourse(userId, course);
+    res.status(200).json({ message: "Course added successfully." });
+  } catch (err) {
+    console.error("Kurs eklenirken hata:", err);
+    res.status(500).json({ error: "Something went wrong." });
+  }
+}
 
 
 function getCustomerById(request, response) {
@@ -132,4 +149,4 @@ async function getAllUsers(request, response) {
     }
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName,addCourseToUser}

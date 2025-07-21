@@ -11,7 +11,10 @@ const repository=require("../repository/CustomerRepository");
 }
 
 
-
+async function addCourse(userId, courseName) {
+ 
+  return await repository.addCourseToUser(userId, courseName);
+}
 
  async function getCustomerById(id) {
    return await repository.getCustomerById(id);
@@ -38,4 +41,4 @@ function getAllUsers() {
     return repository.getAllUsers();
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName,addCourse}

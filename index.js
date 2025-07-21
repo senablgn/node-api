@@ -13,7 +13,7 @@ app.get('/customer/:id', customersController.getCustomerById);
 app.put('/customer/update/:id', customersController.updateCustomer); 
 app.delete('/customer/delete/:id', customersController.deleteCustomer);
 app.get('/users', customersController.getAllUsers);
-
+app.post('/user/:id', customersController.addCourseToUser);
 
 app.listen(3000, () => {
     console.log("Server is running ");

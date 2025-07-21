@@ -68,4 +68,15 @@ async function getAllUsers() {
 }
 
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName}
+async function addCourseToUser(userId, courseName) {
+  const query = `
+    UPDATE users
+    SET courses_of_interest = array_append(courses_of_interest, $1)
+    WHERE id = $2;
+  `;
+  await db.query(query, [courseName, userId]);
+}
+
+
+
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName,addCourseToUser}
