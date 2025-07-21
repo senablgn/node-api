@@ -12,7 +12,7 @@ app.get('/customer/name', customersController.getCustomerByName);
 app.get('/customer/:id', customersController.getCustomerById);    
 app.put('/customer/update/:id', customersController.updateCustomer); 
 app.delete('/customer/delete/:id', customersController.deleteCustomer);
-app.get('/customers', customersController.getAllCustomers);
+app.get('/users', customersController.getAllUsers);
 
 
 app.listen(3000, () => {

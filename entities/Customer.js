@@ -1,15 +1,14 @@
 'use strict';
 
- class Customer{
-    constructor(id,nationalId,firstName,lastName,password,email){
-        this.id=id;
+ class User{
+    constructor(nationalId,firstName,lastName,email,phoneNumber){
         this.nationalId=nationalId;
         this.firstName=firstName;
         this.lastName=lastName;
-        this.password=password;
         this.email=email;
+        this.phoneNumber=phoneNumber;
     }
     
 }
 
-module.exports=Customer;
+module.exports=User;
