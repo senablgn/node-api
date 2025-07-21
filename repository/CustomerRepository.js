@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const db = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'postgres',  
+    database: 'postgres_users',  
     password: '5285',
     port: 5433,
 });
@@ -12,10 +12,10 @@ module.exports = db;
 
 
 
-async function createCustomer({id,nationalId,firstName,lastName,password,email}) {
-const query = 'INSERT INTO customers (id, national_id, first_name, last_name, password, email) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+async function createCustomer({nationalId,firstName,lastName,email,phoneNumber}) {
+const query = 'INSERT INTO users (national_id, first_name, last_name, email,phone_number) VALUES ($1, $2, $3, $4, $5) RETURNING *';
 ;
-    const values = [id,nationalId,firstName,lastName,password,email];
+    const values = [nationalId,firstName,lastName,email,phoneNumber];
     const result = await db.query(query, values);
     return result.rows[0];
 }
@@ -24,16 +24,15 @@ const query = 'INSERT INTO customers (id, national_id, first_name, last_name, pa
 
 
 async function getCustomerById(id) {
-    const query = 'SELECT * FROM customers WHERE id = $1 ;';
+    const query = 'SELECT * FROM users WHERE id = $1 ;';
     const values = [id];
-
     const result = await db.query(query, values);
     return result.rows[0]; 
 }
 
 
 async function getCustomerByName(firstName) {
-    const query = 'SELECT * FROM customers WHERE first_name = $1 ;';
+    const query = 'SELECT * FROM users WHERE first_name = $1 ;';
     const values = [firstName];  ////////
 
     const result = await db.query(query, values);
@@ -43,7 +42,7 @@ async function getCustomerByName(firstName) {
 
 
 async function updateCustomer(id,field,value) {
-  let query = `UPDATE customers SET ${field} = $1 WHERE id = $2 RETURNING *;`;
+  let query = `UPDATE users SET ${field} = $1 WHERE id = $2 RETURNING *;`;
 
     
     let values=[value,id];
@@ -55,18 +54,18 @@ async function updateCustomer(id,field,value) {
 
 
 async function deleteCustomer(id) {
-    let query='delete from customers where id=$1 RETURNING *;';
+    let query='delete from users where id=$1 RETURNING *;';
     let value=[id];
     const result=await db.query(query,value);
     return result.rows[0];
 }
 
 
-async function getAllCustomers() {
-    const query = 'SELECT * FROM customers;';
+async function getAllUsers() {
+    const query = 'SELECT * FROM users;';
     const result = await db.query(query);
     return result.rows;
 }
 
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers,getCustomerByName}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName}

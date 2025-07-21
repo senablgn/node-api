@@ -1,25 +1,40 @@
 'use strict';
 
-const Customer = require("../entities/Customer");
+const User = require("../entities/Customer");
+
 
 
 const customerService=require("../service/CustomerService")
 
-function createCustomer(createRequest,createCustomerResponseResponse) {
-    const {id,nationalId,firstName,lastName,password,email}=createRequest.body;
-    
-    const createdCustomer=new Customer(id,nationalId,firstName,lastName,password,email);
+async function createCustomer(req, res) {
+    const { nationalId,firstName,lastName,email,phoneNumber } = req.body;
 
-  
-    customerService.createCustomer(createdCustomer);
-    createCustomerResponseResponse.json({"message":"Customer created"});
+
+    const createdCustomer = { nationalId, firstName, lastName, phoneNumber, email };
+
+    try {
+        await customerService.createCustomer(createdCustomer);
+
+        res.status(201).json({ message: "Customer created successfully" });
+
+    } catch (error) {
+        console.error("Hata:", error); 
+
+        if (error.code === '23505') {
+            
+            return res.status(409).json({ error: `National id (${nationalId}) is already exist.` });
+        }
+        
+        res.status(500).json({ error: "Server error." });
+    }
 }
+
 
 
 
 function getCustomerById(request, response) {
     const { id } = request.params;
- 
+    console.log("x")
 
     customerService.getCustomerById(id)
         .then(customer => {
@@ -33,6 +48,22 @@ function getCustomerById(request, response) {
             console.error(err);
             response.status(500).json({ message: "Internal server error" });
         });
+}
+
+
+function getCustomerByName(request,response) {
+    const firstName=request.query.firstName;
+
+    customerService.getCustomerByName(firstName).then(customer=>{
+        if(customer){
+            response.json({"customers listed ":customer})
+        }else{
+            response.status(404).json({message:"customer not found"});
+        }
+    }).catch(error=>{
+        console.log(error);
+        response.status(500).json({message:"Internal server error"})
+    });
 }
 
 function getCustomerByName(request,response) {
@@ -89,20 +120,16 @@ function deleteCustomer(request,response) {
 
 }
 1
+async function getAllUsers(request, response) {
+    try {
+        const customers = await customerService.getAllUsers();
 
-function getAllCustomers(request,response) {
-    return  customerService.getAllCustomers().then(customer=>{
-        if(customer){
-            response.json({"customers listed ":customer});
-        }
-        else{
-            response.status(404).json({"error":"Empty List"})
-        }
-        
-    }).catch(error=>{
+        response.status(200).json(customers);
+
+    } catch (error) {
         console.error(error);
-        response.status(500).json({message:"Server Error"});
-    });
+        response.status(500).json({ message: "Server Error" });
+    }
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers,getCustomerByName}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName}

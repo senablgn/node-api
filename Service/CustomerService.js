@@ -6,8 +6,8 @@ const repository=require("../repository/CustomerRepository");
 
 
 
- async function createCustomer({id,nationalId,firstName,lastName,password,email}) {
-  return await  repository.createCustomer({id,nationalId,firstName,lastName,password,email});
+ async function createCustomer({nationalId,firstName,lastName,email,phoneNumber}) {
+  return await  repository.createCustomer({nationalId,firstName,lastName,email,phoneNumber});
 }
 
 
@@ -34,8 +34,8 @@ async function getCustomerByName(firstName) {
  return repository.deleteCustomer(id);
 }
 
-function getAllCustomers() {
-    return repository.getAllCustomers();
+function getAllUsers() {
+    return repository.getAllUsers();
 }
 
-module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllCustomers,getCustomerByName}
+module.exports = { createCustomer, getCustomerById ,updateCustomer,deleteCustomer,getAllUsers,getCustomerByName}
