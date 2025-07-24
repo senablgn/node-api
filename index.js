@@ -2,8 +2,9 @@
 
 const express = require("express");
 const app = express();
+const { createTable } = require('./db/init-db');
 const customersController = require("./controllers/CustomersController");
-
+const PORT=3000;
 
 app.use(express.json());    
 
@@ -15,6 +16,10 @@ app.delete('/customer/delete/:id', customersController.deleteCustomer);
 app.get('/users', customersController.getAllUsers);
 app.post('/user/:id', customersController.addCourseToUser);
 
-app.listen(3000, () => {
-    console.log("Server is running ");
+createTable().then(() => {
+    app.listen(PORT, () => {
+        console.log(` Server is running on port ${PORT}`);
+    });
+}).catch((err) => {
+    console.error( err);
 });
