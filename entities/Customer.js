@@ -1,8 +1,7 @@
 'use strict';
 
  class User{
-    constructor(nationalId,firstName,lastName,email,phoneNumber){
-        this.nationalId=nationalId;
+    constructor(firstName,lastName,email,phoneNumber){
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;

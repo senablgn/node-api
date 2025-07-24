@@ -7,9 +7,9 @@ const User = require("../entities/Customer");
 const customerService=require("../service/CustomerService")
 
 async function createCustomer(req, res) {
-    const { nationalId, firstName, lastName, email, phoneNumber } = req.body;
+    const { firstName, lastName, email, phoneNumber,course } = req.body;
 
-    const createdCustomer = { nationalId, firstName, lastName, phoneNumber, email };
+    const createdCustomer = {  firstName, lastName, phoneNumber, email,course };
 
     try {
         const newUser = await customerService.createCustomer(createdCustomer); // ID'yi al
@@ -21,12 +21,7 @@ async function createCustomer(req, res) {
         });
 
     } catch (error) {
-        console.error("Hata:", error); 
-
-        if (error.code === '23505') {
-            return res.status(409).json({ error: `National id (${nationalId}) is already exist.` });
-        }
-        
+        console.error("Hata:", error.message); 
         res.status(500).json({ error: "Server error." });
     }
 }

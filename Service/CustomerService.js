@@ -6,8 +6,8 @@ const repository=require("../repository/CustomerRepository");
 
 
 
- async function createCustomer({nationalId,firstName,lastName,email,phoneNumber}) {
-  return await  repository.createCustomer({nationalId,firstName,lastName,email,phoneNumber});
+ async function createCustomer({firstName,lastName,email,phoneNumber,course}) {
+  return await  repository.createCustomer({firstName,lastName,email,phoneNumber,course});
 }
 
 

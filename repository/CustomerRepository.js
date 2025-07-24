@@ -12,10 +12,9 @@ module.exports = db;
 
 
 
-async function createCustomer({nationalId,firstName,lastName,email,phoneNumber}) {
-const query = 'INSERT INTO users (national_id, first_name, last_name, email,phone_number) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-;
-    const values = [nationalId,firstName,lastName,email,phoneNumber];
+async function createCustomer({firstName,lastName,email,phoneNumber,course}) {
+const query = 'INSERT INTO users (first_name, last_name, email,phone_number,courses_of_interest) VALUES ($1, $2, $3, $4,$5) RETURNING *';
+    const values = [firstName,lastName,email,phoneNumber,course];
     const result = await db.query(query, values);
     return result.rows[0];
 }
