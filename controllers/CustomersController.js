@@ -6,24 +6,31 @@ const User = require("../entities/Customer");
 
 const customerService=require("../service/CustomerService")
 
-async function createCustomer(req, res) {
-    const { firstName, lastName, email, phoneNumber,course } = req.body;
+async function createCustomer(request, response) {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      courses_of_interest,
+      sessionId
+    } = request.body;
 
-    const createdCustomer = {  firstName, lastName, phoneNumber, email,course };
+    const newCustomer = await customerService.createCustomer({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      courses_of_interest,
+      sessionId
+    });
 
-    try {
-        const newUser = await customerService.createCustomer(createdCustomer); // ID'yi al
-        
-        res.status(201).json({ 
-            message: "Customer created successfully",
-            userId: newUser.id,  // ID'yi döndür
-            user: newUser        // İsteğe bağlı: tüm kullanıcı bilgisi
-        });
-
-    } catch (error) {
-        console.error("Hata:", error.message); 
-        res.status(500).json({ error: "Server error." });
-    }
+    response.status(201).json(newCustomer);
+  } catch (err) {
+    console.error("Customer create error:", err);
+    response.status(500).json({ message: "Internal server error" });
+  }
 }
 
 async function addCourseToUser(req, res) {

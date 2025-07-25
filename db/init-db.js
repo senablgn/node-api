@@ -14,9 +14,10 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
+    email VARCHAR(100) ,
     phone_number VARCHAR(10),
-    email VARCHAR(100),
-    courses_of_interest TEXT[]
+    session_id VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 `;
 

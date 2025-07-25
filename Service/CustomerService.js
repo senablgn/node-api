@@ -6,9 +6,11 @@ const repository=require("../repository/CustomerRepository");
 
 
 
- async function createCustomer({firstName,lastName,email,phoneNumber,course}) {
-  return await  repository.createCustomer({firstName,lastName,email,phoneNumber,course});
+async function createCustomer(data) {
+  return await repository.createCustomer(data);
 }
+
+
 
 
 async function addCourse(userId, courseName) {
