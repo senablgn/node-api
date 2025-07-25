@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100) ,
     phone_number VARCHAR(10),
     session_id VARCHAR(255),
+    courses_of_interest TEXT[],
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 `;
